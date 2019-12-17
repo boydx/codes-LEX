@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8 />
+  <title>Lab 8: Denver home location exercise</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: rgb(43, 43, 43);
+      font-family: "Lato", sans-serif;
+      font-size: 100%;
+      font-weight: 300;
+      color: rgb(172, 172, 172);
+    }
+
+    header,
+    footer,
+    section {
+      padding: 6px 10%;
+      margin: 0 auto;
+      width: 80%
+    }
+
+    h1 {
+      display: inline-block;
+      margin-right: 20px;
+      color: rgb(190, 190, 190);
+      font-size: 3.5em;
+      font-weight: 700;
+    }
+
+    h2 {
+      display: inline-block;
+      color: rgba(255, 200, 0, 0.8);
+      letter-spacing: 0.05em;
+      margin-top: 0px;
+      font-weight: 300;
+      text-transform: uppercase;
+      border-bottom: 1px dotted rgba(255, 200, 0, 0.5);
+      ;
+    }
+
+    #map {
+      width: 80%;
+      height: 540px;
+      margin: 10px auto;
+    }
+
+    p {
+      font-size: 1em;
+      color: rgba(170, 170, 170);
+      ;
+      font-weight: 300;
+      font-size: 1.2em;
+    }
+
+    a {
+      color: rgba(255, 200, 0, 0.8);
+      font-weight: 400;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>HOUSE HUNTING</h1>
+    <h2><a href="https://www.denver.org/">DENVER,CO</a></h2>
+  </header>
+
+
+  <div id='map'></div>
+
+  <footer>
+    <p> Showing all the amenities a propsective homebyuer needs, this interactive map allows you explore potential neighborhoods in Denver. Click on the map to see which locations fall within a 1 km range of each other; the perfect walking distance.
+      To explore more, use the zoom and layers panel to toggle on and off the different types of amenities and click on each point to learn more. Happy house hunting!</p>
+    <p><a href='https://geography.as.uky.edu/users/eba287' target="blank">Emily Barrett</a></p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+  <script src='https://unpkg.com/simple-statistics@7.0.6/dist/simple-statistics.min.js'>
+  </script>
+
+  <script>
+    // 1. ADD BASE MAP
+    var map = L.map('map', {
+      center: [38.05, -84.5],
+      zoom: 11,
+      zoomSnap: .1,
+      zoomControl: true
+    });
+
+    var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+
+    // BEGIN WRITING YOUR SOLUTION CODE HERE
+
+    // 2. ADD CODE POINTS
+
+    // check that jquery works:
+    // jQuery("h1").html("Housing Ownership in Kentucky");
+
+    // load, style, filter points:
+    // var pointsLayer = $.getJSON("data2/codes.geojson", function(data) {
+    //   var dataLayer = L.geoJson(data, {
+    //     pointToLayer: function(feature, latlng) {
+    //       return L.circleMarker(latlng);
+    //     },
+    //     style: function(feature) {
+    //       return {
+    //         color: 'white',
+    //         weight: 1,
+    //         fillOpacity: 1,
+    //         fillColor: '#1f78b4',
+    //         radius: 5,
+    //       };
+    //     },
+    //   }).addTo(map);
+    //
+    // });
+
+
+    //2. Add hexagon layer
+    var hexLayer = $.getJSON("data2/codes.geojson", function(data) {
+      var dataLayer = L.geoJson(data, {
+        style: function(feature) {
+          return {
+            color: 'white',
+            weight: 1,
+            fillOpacity: 1,
+            fillColor: '#1f78b4',
+            radius: 5,
+          };
+        },
+      }).addTo(map);
+
+    });
+
+
+  </script>
+
+</body>
+
+</html>
