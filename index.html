@@ -278,46 +278,46 @@
 
         // 2. ADD CODE POINTS when click on hexagon
 
-        $.when(hexLayer).done(function() {
-        var pointsLayer = $.getJSON("data2/codes.geojson", function(data) {
-          var dataLayer = L.geoJson(data, {
-            pointToLayer: function(feature, latlng) {
-              return L.circleMarker(latlng);
-            },
-            style: function(feature) {
-              return {
-                color: 'white',
-                weight: 1,
-                fillOpacity: 1,
-                fillColor: '#1f78b4',
-                radius: 5,
-              };
-            },
-          }).addTo(map);
-
-        // select code points that fall within 1/2 mile and show on map with hexagon selected and summary statistics
-          map.on('click', function(e) {
-            dataLayer.eachLayer(function(layer) {
-              var distance = e.latlng.distanceTo(layer.getLatLng()) / 1000; // distance as km
-
-              if (distance > 0.8) {
-                layer.setStyle({
-                  stroke: false,
-                  fill: false,
-                });
-                // map.setView(e.latlng, 14);
-              } else {
-                layer.setStyle({
-                  stroke: false,
-                  fill: true,
-                  fillOpacity: true
-
-                });
-              }
-            });
-          });
-
-        })});
+        // $.when(hexLayer).done(function() {
+        // var pointsLayer = $.getJSON("data2/codes.geojson", function(data) {
+        //   var dataLayer = L.geoJson(data, {
+        //     pointToLayer: function(feature, latlng) {
+        //       return L.circleMarker(latlng);
+        //     },
+        //     style: function(feature) {
+        //       return {
+        //         color: 'white',
+        //         weight: 1,
+        //         fillOpacity: 1,
+        //         fillColor: '#1f78b4',
+        //         radius: 5,
+        //       };
+        //     },
+        //   }).addTo(map);
+        //
+        // // select code points that fall within 1/2 mile and show on map with hexagon selected and summary statistics
+        //   map.on('click', function(e) {
+        //     dataLayer.eachLayer(function(layer) {
+        //       var distance = e.latlng.distanceTo(layer.getLatLng()) / 1000; // distance as km
+        //
+        //       if (distance > 0.8) {
+        //         layer.setStyle({
+        //           stroke: false,
+        //           fill: false,
+        //         });
+        //         // map.setView(e.latlng, 14);
+        //       } else {
+        //         layer.setStyle({
+        //           stroke: false,
+        //           fill: true,
+        //           fillOpacity: true
+        //
+        //         });
+        //       }
+        //     });
+        //   });
+        //
+        // })});
   </script>
 
 </body>
