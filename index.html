@@ -197,9 +197,9 @@
 
       <!-- Start right column -->
       <div class="second-column">
-        <img src="images/cloud.jpg" alt="New Zealand landscape" id="photos" class="img-fill">
+        <img src="images/tables.jpg" alt="New Zealand landscape" id="photos" class="img-fill">
         <div class="caption">
-          A snapshot of the landscape that New Zealand has to offer! Source: <a href="https://www.nature.org/en-us/about-us/where-we-work/asia-pacific/new-zealand/">New Zealand Nature Conservancy </a>
+          A snapshot of the distribution of the codes data.
         </div>
         <!-- End right column -->
       </div>
@@ -237,22 +237,22 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19,
+      minZoom: 6,
     }).addTo(map);
 
 
     // BEGIN WRITING YOUR SOLUTION CODE HERE
 
 
-    // 1. Add hexagon layer and create choropleth map, adding popup with clik feature
+    // 1. Add hexagon layer and create choropleth map, adding popup
     var hexLayer = $.getJSON("data2/codesFINAL.geojson", function(data) {
       var dataLayer = L.geoJson(data, {
         style: function(feature) {
           return {
-            color: 'white',
+            color: '#EDEDED',
             weight: 1,
-            fillOpacity: .5,
+            fillOpacity: .75,
             fillColor: '#1f78b4',
-            radius: 2.5,
           };
         },
         onEachFeature: function(feature, layer) {
@@ -263,10 +263,6 @@
             Reported anonymously: ${layer.feature.properties.ANONPOINTS} <br>
             Self-reported: ${layer.feature.properties.SELFPOINTS}`;
           layer.bindTooltip(popup);
-
-          // if (layer.feature.properties.TOTPOINTS > 5) { // Privacy measure don't want to identify houses
-          //   drawPoints(dataLayer);
-          // }
         },
       }).addTo(map);
       drawMap(dataLayer);
@@ -381,7 +377,7 @@
       // add the legend to the map
       legend.addTo(map);
     };
-    //
+
     // 2. function to make points appear when click on map
         function drawPoints(dataLayer) {
           $.when(hexLayer).done(function() {
@@ -402,15 +398,16 @@
               }).addTo(map);
 
               map.on('click', function(e) {
+                map.setView(e.latlng, 15); 
                 dataLayer.eachLayer(function(layer) {
                   // console.log(layer.getLatLng()); // access to the layer coordinates
                   var distance = e.latlng.distanceTo(layer.getLatLng()) / 1000; // distance as km
                   if (distance > 0.4) { // distance as half mile radius
+                    // map.flyTo(e.latlng, 4);
                     layer.setStyle({
                       stroke: false,
                       fill: false,
                     });
-                    map.flyTo(e);
                   } else {
                     layer.setStyle({
                       stroke: false,
@@ -446,10 +443,12 @@
         });
 
         // Add layer to map!
-        usbLayer.addTo(map)
+      usbLayer.addTo(map)
 
       });
     });
+
+
   </script>
 
 </body>
