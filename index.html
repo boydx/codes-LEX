@@ -3,113 +3,113 @@
 
 <head>
   <meta charset=utf-8 />
-  <title>Final map: Code Enforcement & Gentrification<</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <title>Final map: Code Enforcement & Gentrification
+    <</title> <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: rgb(43, 43, 43);
-      font-family: 'Roboto', sans-serif;
-      font-size: 100%;
-      font-weight: 300;
-      color: rgb(172, 172, 172);
-    }
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: rgb(43, 43, 43);
+        font-family: 'Roboto', sans-serif;
+        font-size: 100%;
+        font-weight: 300;
+        color: rgb(172, 172, 172);
+      }
 
-    header,
-    section {
-      padding: 6px 10%;
-      margin: 0 auto;
-      width: 80%,
-    }
+      header,
+      section {
+        padding: 6px 10%;
+        margin: 0 auto;
+        width: 80%,
+      }
 
-    footer {
-      width: 100%;
-      margin: 10px, auto;
-      background: #fbfbfb;
-      text-align: center;
-    }
+      footer {
+        width: 100%;
+        margin: 10px, auto;
+        background: #fbfbfb;
+        text-align: center;
+      }
 
-    h1 {
-      display: inline-block;
-      margin-right: 20px;
-      color: rgb(190, 190, 190);
-      font-size: 3.5em;
-      font-weight: 700;
-      font-family: 'Inconsolata', monospace;
+      h1 {
+        display: inline-block;
+        margin-right: 20px;
+        color: rgb(190, 190, 190);
+        font-size: 3.5em;
+        font-weight: 700;
+        font-family: 'Inconsolata', monospace;
 
-    }
+      }
 
-    h2 {
-      display: inline-block;
-      color: rgba(255, 200, 0, 0.8);
-      letter-spacing: 0.05em;
-      margin-top: 0px;
-      font-weight: 300;
-      text-transform: uppercase;
-      /* border-bottom: 1px dotted rgba(255, 200, 0, 0.5); */
-      ;
-    }
+      h2 {
+        display: inline-block;
+        color: rgba(255, 200, 0, 0.8);
+        letter-spacing: 0.05em;
+        margin-top: 0px;
+        font-weight: 300;
+        text-transform: uppercase;
+        /* border-bottom: 1px dotted rgba(255, 200, 0, 0.5); */
+        ;
+      }
 
-    #map {
-      width: 80%;
-      height: 540px;
-      margin: 10px auto;
-    }
+      #map {
+        width: 80%;
+        height: 540px;
+        margin: 10px auto;
+      }
 
-    p {
-      font-size: 1em;
-      color: rgba(170, 170, 170);
-      ;
-      font-weight: 300;
-      font-size: 1.2em;
-    }
+      p {
+        font-size: 1em;
+        color: rgba(170, 170, 170);
+        ;
+        font-weight: 300;
+        font-size: 1.2em;
+      }
 
-    a {
-      color: rgba(255, 200, 0, 0.8);
-      font-weight: 400;
-      text-decoration: none;
-    }
+      a {
+        color: rgba(255, 200, 0, 0.8);
+        font-weight: 400;
+        text-decoration: none;
+      }
 
-    a:hover {
-      text-decoration: underline;
-    }
+      a:hover {
+        text-decoration: underline;
+      }
 
-    .img-fill {
-      width: 100%;
-      height: auto;
-      margin: 10px 0;
-    }
+      .img-fill {
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+      }
 
-    /* Use float property to make two-column layout */
-    .first-column {
-      float: left;
-      width: 49%;
-      padding-right: 2%;
+      /* Use float property to make two-column layout */
+      .first-column {
+        float: left;
+        width: 49%;
+        padding-right: 2%;
 
-    }
+      }
 
-    .second-column {
-      float: left;
-      width: 47%;
-      padding-left: 2%;
+      .second-column {
+        float: left;
+        width: 47%;
+        padding-left: 2%;
 
-    }
+      }
 
-    /* Clear floats after columns */
-    .row::after {
-      content: "";
-      display: block;
-      clear: both;
-    }
+      /* Clear floats after columns */
+      .row::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
 
-    /* @media screen and (max-width: 900px) {
+      /* @media screen and (max-width: 900px) {
 
       .first-column,
       .second-column {
@@ -117,46 +117,46 @@
       }
     } */
 
-    .legend {
-      padding: 6px 8px;
-      font-size: 1em;
-      /* Use transparency to blend elements. */
-      border: 2px solid rgba(244, 244, 244, 0.2);
-      background: rgba(100, 100, 100, 0.9);
-      color: rgba(244, 244, 244, 0.8);
-      border-radius: 5px;
-    }
+      .legend {
+        padding: 6px 8px;
+        font-size: 1em;
+        /* Use transparency to blend elements. */
+        border: 2px solid rgba(244, 244, 244, 0.2);
+        background: rgba(100, 100, 100, 0.9);
+        color: rgba(244, 244, 244, 0.8);
+        border-radius: 5px;
+      }
 
-    .legend h3 {
-      font-size: 1.1em;
-      font-weight: normal;
-      color: #001323;
-      margin: 0 0 10px 0;
-    }
+      .legend h3 {
+        font-size: 1.1em;
+        font-weight: normal;
+        color: #001323;
+        margin: 0 0 10px 0;
+      }
 
-    .legend span {
-      width: 20px;
-      height: 20px;
-      float: left;
-      margin: 0 10px 4px 0;
-    }
+      .legend span {
+        width: 20px;
+        height: 20px;
+        float: left;
+        margin: 0 10px 4px 0;
+      }
 
-    .legend label {
-      font-size: 1.1em;
-    }
+      .legend label {
+        font-size: 1.1em;
+      }
 
-    .legend label:after {
-      content: '';
-      display: block;
-      clear: both;
-    }
+      .legend label:after {
+        content: '';
+        display: block;
+        clear: both;
+      }
 
-    .leaflet-bar a {
-      /* Override the default style for Leaflet's zoom  */
-      background: rgba(100, 100, 100, 0.9);
-      color: rgba(244, 244, 244, 0.8);
-    }
-  </style>
+      .leaflet-bar a {
+        /* Override the default style for Leaflet's zoom  */
+        background: rgba(100, 100, 100, 0.9);
+        color: rgba(244, 244, 244, 0.8);
+      }
+    </style>
 </head>
 
 <body>
@@ -177,13 +177,13 @@
       <div class="first-column">
         <br>
         <h2>Description</h2>
-        <p> Gentrification is a controversial, polarizing and politically divisive topic. In the city of Lexington, KY, concerns over gentrification have resulted in increased scrutiny towards city agencies.
+        <p> Gentrification is a controversial, polarizing and politically divisive topic. In the city of Lexington, KY, concerns over gentrification have resulted in increased scrutiny of government agencies.
           Most prominently, residents have expressed concern that code enforcement violations are being applied unfairly, aggressively, and for the benefit of property developers. Thus, some argue that code enforcement has been weaponized as a tool
           for gentrification.
           Although city officials have denied these claims, beacuse the current system runs on complaints, rather than systematic and periodic inspections, residents remain concerned. <br>
           <br>
           This map explores patterns of code enforcement violations, with more specific detail provided on who initiates the code complaint. Hover over the map for summary statistics, and click on the map to see more detail.
-          <h2> A note on data sources and privacy concerns:</h2>
+          <h2> A note on data sources and privacy:</h2>
           <p> The data for the map was obtained via an open data request from the <a href='https://www.lexingtonky.gov/departments/code-enforcement' target="blank"> LFUCG Department of Code Enforcement.</a> The original dataset contained
             all resolved code violations related to residential properties between 2012 and 2017. While an ideal map would provide full details for all code violations by address, this data has been cleaned and aggregated to prevent identifiable
             information from being released publically.
@@ -207,10 +207,10 @@
           <br>
           <br>
           <h3> Definitions:</h3>
-          <p> Gentrification: The process of neighbourhood upgrading by relatively affluent incomers who move into a poorer neighbourhood in sufficient numbers to displace lower-income groups and transform its social identity (Pacione 2009, 678).
+          <h3> Gentrification: The process of neighbourhood upgrading by relatively affluent incomers who move into a poorer neighbourhood in sufficient numbers to displace lower-income groups and transform its social identity (Pacione 2009, 678).
             <br>
             <br>
-            Code enforcement: Ideally, code enforcement is used to preserve house values, maintain neighborhood character, and ensure “both a safe and beautiful Lexington” (LFUCG).</p>
+            Code enforcement: Ideally, code enforcement is used to preserve house values, maintain neighborhood character, and ensure “both a safe and beautiful Lexington” (LFUCG).</h3>
         </div>
         <!-- End right column -->
       </div>
@@ -247,6 +247,11 @@
     L.control.zoom({
       position: 'topright'
     }).addTo(map);
+
+    // map.setMaxBounds([
+    //   [38.04, -85],
+    //   [38.04, -84]
+    // ]);
 
     var tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -413,7 +418,7 @@
           }).addTo(map);
 
           map.on('click', function(e) {
-            map.setView(e.latlng, 15);
+            map.flyTo(e.latlng, 15);
             dataLayer.eachLayer(function(layer) {
               // console.log(layer.getLatLng()); // access to the layer coordinates
               var distance = e.latlng.distanceTo(layer.getLatLng()) / 1000; // distance as km
@@ -462,8 +467,6 @@
 
       });
     });
-
-
   </script>
 
 </body>
