@@ -152,7 +152,7 @@
     // BEGIN WRITING YOUR SOLUTION CODE HERE
 
 
-    // 1. Add hexagon layer and create choropleth map
+    // 1. Add hexagon layer and create choropleth map, adding popup with clik feature
     var hexLayer = $.getJSON("data2/codesFINAL.geojson", function(data) {
       var dataLayer = L.geoJson(data, {
         style: function(feature) {
@@ -165,7 +165,7 @@
           };
         },
         onEachFeature: function(feature, layer) {
-          console.log(layer.feature.properties);
+          // console.log(layer.feature.properties);
           var popup = `<h4>Violations rate: ${layer.feature.properties.PER_TOT} </h4>
             Reported by police: ${layer.feature.properties.POLPOINTS} <br>
             Reported by tenant: ${layer.feature.properties.TENPOINTS} <br>
@@ -173,10 +173,9 @@
             Self-reported: ${layer.feature.properties.SELFPOINTS}`;
           layer.bindTooltip(popup);
 
-        },
-        onEachFeature: function(feature, layer){
-          layer.on('click', function() {
-          drawPoints(dataLayer);})
+          if (layer.feature.properties.TOTPOINTS > 5) { // Privacy measure don't want to identify houses
+              drawPoints(dataLayer);
+          }
         },
       }).addTo(map);
       drawMap(dataLayer);
@@ -199,46 +198,51 @@
       drawLegend(breaks);
     };
 
-// function to make points appear when click on hexagon PICK UP HERE FIGURE OUT HOW TO LIMIT THE POINTS 
-    function drawPoints(dataLayer){
+    // function to make points appear when click on hexagon PICK UP HERE FIGURE OUT HOW TO LIMIT THE POINTS
+    function drawPoints(dataLayer) {
       $.when(hexLayer).done(function() {
-      var pointsLayer = $.getJSON("data2/codes.geojson", function(data) {
-        var dataLayer = L.geoJson(data, {
-          pointToLayer: function(feature, latlng) {
-            return L.circleMarker(latlng);
-          },
-          style: function(feature) {
-            return {
-              color: 'white',
-              weight: 1,
-              fillOpacity: 1,
-              fillColor: '#1f78b4',
-              radius: 5,
+          var pointsLayer = $.getJSON("data2/codes.geojson", function(data) {
+              var dataLayer = L.geoJson(data, {
+                pointToLayer: function(feature, latlng) {
+                  return L.circleMarker(latlng);
+                },
+                style: function(feature) {
+                  return {
+                    color: 'null',
+                    weight: 0,
+                    fillOpacity: 0,
+                    fillColor: 'null',
+                    radius: 5,
+                  };
+                },
+              }).addTo(map);
+
+              map.on('click', function(e) {
+                dataLayer.eachLayer(function(layer) {
+                  // console.log(layer.getLatLng()); // access to the layer coordinates
+                    var distance = e.latlng.distanceTo(layer.getLatLng()) / 1000; // distance as km
+                    if (distance > 0.4) {
+                      layer.setStyle({
+                        stroke: false,
+                        fill: false,
+                      });
+                      // map.setView(e.latlng, 14);
+                    } else {
+                      layer.setStyle({
+                        stroke: false,
+                        fill: true,
+                        fillOpacity: true
+
+                      });
+                    }
+                  });
+                  });
+                })
+              })
             };
-          },
-          onEachFeature: function(feature, layer){
-            layer.on('click', function(e) {
-                var distance = e.latlng.distanceTo(layer.getLatLng()) / 1000; // distance as km
-                if (distance > 0.4) {
-                  layer.setStyle({
-                    stroke: false,
-                    fill: false,
-                  });
-                  // map.setView(e.latlng, 14);
-                } else {
-                  layer.setStyle({
-                    stroke: false,
-                    fill: true,
-                    fillOpacity: true
+      //     });
+      // });
 
-                  });
-                }
-              });
-            },
-        }).addTo(map);
-
-  })
-})};
 
 
     function getClassBreaks(dataLayer) {
@@ -260,7 +264,7 @@
         values.push(value);
       });
 
-      console.log(values); // verify in the Console
+      // console.log(values); // verify in the Console
       // determine similar clusters
       var clusters = ss.ckmeans(values, 5);
 
@@ -269,10 +273,10 @@
         return [cluster[0], cluster.pop()];
       });
 
-      console.log(breaks); // verify your break values
+      // console.log(breaks); // verify your break values
       // console.log(breaks[1]);
       // console.log(breaks[0]);
-      console.log(breaks[3][1]);
+      // console.log(breaks[3][1]);
 
       return breaks;
     };
@@ -371,7 +375,6 @@
     //     }
     //   });
     // });
-
   </script>
 
 </body>
