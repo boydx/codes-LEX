@@ -3,7 +3,7 @@
 
 <head>
   <meta charset=utf-8 />
-  <title>Final map: Code Enforcement & Gentrification
+  <title>Code Enforcement & Gentrification
     <</title> <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
@@ -56,6 +56,23 @@
         /* border-bottom: 1px dotted rgba(255, 200, 0, 0.5); */
         ;
       }
+      h3 {
+        display: inline-block;
+        color: rgba(170, 170, 170);
+        letter-spacing: 0.05em;
+        margin-top: 0px;
+        font-size: 1.1em;
+      }
+
+      h5 {
+        display: inline-block;
+        color: 'white';
+        letter-spacing: 0.05em;
+        margin-top: 0px;
+        font-size: 0.9em;
+        text-transform: uppercase;
+      }
+
 
       #map {
         width: 80%;
@@ -182,14 +199,14 @@
           for gentrification.
           Although city officials have denied these claims, beacuse the current system runs on complaints, rather than systematic and periodic inspections, residents remain concerned. <br>
           <br>
-          This map explores patterns of code enforcement violations, with more specific detail provided on who initiates the code complaint. Hover over the map for summary statistics, and click on the map to see more detail.
+          This map explores patterns of code enforcement violations, with more specific detail provided on who initiates the code complaint. Hover over the map for summary statistics, and click on the map to see further patterns of code violations that fall within a 1/2 mile radius.
           <h2> A note on data sources and privacy:</h2>
           <p> The data for the map was obtained via an open data request from the <a href='https://www.lexingtonky.gov/departments/code-enforcement' target="blank"> LFUCG Department of Code Enforcement.</a> The original dataset contained
-            all resolved code violations related to residential properties between 2012 and 2017. While an ideal map would provide full details for all code violations by address, this data has been cleaned and aggregated to prevent identifiable
-            information from being released publically.
+            all resolved code violations related to residential properties between 2012 and 2017. While an ideal map would provide full details for all code violations by address, this data has been cleaned and aggregated, and the map zoom limited, to prevent identifiable
+            information from being released publically. This has been done to respect the wishes of concerned community residents.
 
           </p>
-          Social media links:
+
           <ul>
             <li>See my projects on GitHub: <a href="https://github.com/eba287" target="blank">Emily Barrett</a></li>
             <li>Visit my <a href='https://geography.as.uky.edu/users/eba287' target="blank">bio page</a>.</li>
@@ -201,12 +218,12 @@
 
       <!-- Start right column -->
       <div class="second-column">
-        <img src="images/tables.jpg" alt="New Zealand landscape" id="photos" class="img-fill">
+        <img src="images/tables.jpg" alt="Summary tables" id="photos" class="img-fill">
         <div class="caption">
           A snapshot of the distribution of the codes data.
           <br>
           <br>
-          <h3> Definitions:</h3>
+          <h2> Definitions:</h2>
           <h3> Gentrification: The process of neighbourhood upgrading by relatively affluent incomers who move into a poorer neighbourhood in sufficient numbers to displace lower-income groups and transform its social identity (Pacione 2009, 678).
             <br>
             <br>
@@ -257,7 +274,7 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       minZoom: 11,
-      maxZoom: 15, // limit zoom so cna't get to each address
+      maxZoom: 15, // purposefully limit zoom so that people can't get to each address
     }).addTo(map);
 
 
@@ -265,7 +282,7 @@
 
 
     // 1. Add hexagon layer and create choropleth map, adding popup
-    var hexLayer = $.getJSON("data2/codesFINAL.geojson", function(data) {
+    var hexLayer = $.getJSON("data/codesHEX.geojson", function(data) {
       var dataLayer = L.geoJson(data, {
         style: function(feature) {
           return {
@@ -336,9 +353,7 @@
       });
 
       // console.log(breaks); // verify your break values
-      // console.log(breaks[1]);
-      // console.log(breaks[0]);
-      // console.log(breaks[3][1]);
+
 
       return breaks;
     };
@@ -363,7 +378,7 @@
 
       // create a new Leaflet control object, and position it top left
       var legend = L.control({
-        position: 'topleft'
+        position: 'topleft',
       });
 
       // when the legend is added to the map
@@ -374,7 +389,7 @@
 
         // first append an <h3> tag to the div holding the current attribute
         // and norm values (i.e., the mapped phenomena)
-        div.innerHTML = "<h3>Code violoations per 1,000 citations<br></h3><br>";
+        div.innerHTML = "<h5>Code violoations <br> (per 1,000 citations)<br></h5><br>";
 
         // for each of our breaks
         for (var i = 0; i < breaks.length; i++) {
@@ -387,7 +402,7 @@
           div.innerHTML +=
             '<span style="background:' + color + '"></span> ' +
             '<label>' + (breaks[i][0]).toLocaleString() + ' &mdash; ' +
-            (breaks[i][1]).toLocaleString() + '</label>';
+            (breaks[i][1]).toLocaleString() + '</label>' ;
         }
 
         // return the populated div to be added to the map
@@ -401,7 +416,7 @@
     // 2. function to make points appear when click on map
     function drawPoints(dataLayer) {
       $.when(hexLayer).done(function() {
-        var pointsLayer = $.getJSON("data2/codes.geojson", function(data) {
+        var pointsLayer = $.getJSON("data/codes.geojson", function(data) {
           var dataLayer = L.geoJson(data, {
             pointToLayer: function(feature, latlng) {
               return L.circleMarker(latlng);
@@ -445,15 +460,12 @@
     // 3. ADD USB
     $.when(hexLayer).done(function() {
       // load, filter, and style the state outline
-      $.getJSON("data2/usb.geojson", function(data) {
+      $.getJSON("data/usb.geojson", function(data) {
 
         var usbLayer = L.geoJson(data, {
           style: function(feature) {
             return {
-              // Let's experiment with these colors shortly
               color: '#222222', // Gray
-              // color: '#ffffff', // White
-              // Make line weight larger than the county outline
               weight: .75,
               fillOpacity: 0,
               // This property allows us control interactivty of layer
@@ -467,6 +479,7 @@
 
       });
     });
+
   </script>
 
 </body>
